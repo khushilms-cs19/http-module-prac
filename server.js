@@ -13,7 +13,6 @@ let groceriesList = [
   }
 ];
 
-
 const server = http.createServer((request, response) => {
   // response.setHeader('Content-Type', 'application/json');
   switch (request.url) {
