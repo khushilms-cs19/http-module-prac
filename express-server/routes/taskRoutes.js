@@ -11,7 +11,7 @@ router.get('/', getAllTasks);
 router.get('/:id', getTask);
 
 // POST /tasks
-router.post('', postTask);
+router.post('/', postTask);
 
 // PUT /tasks/1
 router.put('/:id',editTask);

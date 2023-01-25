@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const cors = require('cors');
 
 // Routers
@@ -12,8 +12,7 @@ const PORT = 3000;
 const app = express();
 
 // Pre-requisites 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 
 
