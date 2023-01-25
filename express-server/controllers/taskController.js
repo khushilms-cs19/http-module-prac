@@ -11,10 +11,13 @@ let tasksList = [
   }
 ];
 
+
+// get all the tasks 
 const getAllTasks = (req,res) =>{
   res.status(200).send(tasksList);
 };
 
+//get a single task based on id
 const getTask = (req,res)=>{
   const task = tasksList.find((item)=>item.id === Number(req.params.id));
   if(!task){
@@ -23,7 +26,7 @@ const getTask = (req,res)=>{
   return res.status(200).send(task);
 };
 
-
+//post a task
 const postTask = (req,res)=>{
   const task = {
     id: tasksList.length +1,
@@ -34,6 +37,7 @@ const postTask = (req,res)=>{
   return res.status(201).send(task);
 };
 
+// edit single task based on id
 const editTask = (req,res)=>{
   const taskId = Number(req.params.id);
   const task = tasksList.find((item)=>item.id === taskId);
@@ -50,7 +54,7 @@ const editTask = (req,res)=>{
   return res.status(200).send(task);
 };
 
-
+// set the given task to completed
 const completeTask = (req,res)=>{
   const taskId = Number(req.params.id);
   const task = tasksList.find((item)=>item.id === taskId);
@@ -67,11 +71,13 @@ const completeTask = (req,res)=>{
   return res.status(200).send(task);
 };
 
+// delete all the tasks set to completed
 const deleteCompletedTasks = (req,res)=>{
   tasksList = tasksList.filter((task)=>!task.isCompleted);
   return res.status(200).send(tasksList);
 };
 
+// delete a single task based on id
 const deleteTask = (req,res)=>{
   const taskId = Number(req.params.id);
   const task = tasksList.find((item)=>item.id === taskId);
