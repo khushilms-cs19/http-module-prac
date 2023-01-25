@@ -6,7 +6,6 @@ const PORT = 3000;
 
 
 const server = http.createServer((request, response) => {
-  // response.setHeader('Content-Type', 'application/json');
   const nestedRoutes = request.url.split('/');
   switch (nestedRoutes[1]) {
   case 'tasks':
