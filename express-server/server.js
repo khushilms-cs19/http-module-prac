@@ -6,7 +6,8 @@ const cors = require('cors');
 const { taskRouter } = require('./routes/taskRoutes');
 
 // Constants
-const PORT = 3000;
+// const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Initialize app
 const app = express();
