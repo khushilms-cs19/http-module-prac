@@ -1,4 +1,3 @@
-const db = require('../database/models');
 const taskServices = require('../services/taskServices');
 
 // get all the tasks 
