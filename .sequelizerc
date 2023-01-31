@@ -1,0 +1,8 @@
+const path = require('path');
+
+module.exports = {
+  'config': path.join(__dirname, 'express-server/database/config/config.json'),
+  'migrations-path': path.join(__dirname, 'express-server/database/migrations'),
+  'seeders-path': path.join(__dirname, 'express-server/database/seeders'),
+  'models-path': path.join(__dirname, 'express-server/database/models'),
+};
