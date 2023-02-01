@@ -4,7 +4,7 @@ module.exports = {
     'es2021': true,
     'node': true
   },
-  'eslintIgnore': [ '*.test.js' ],
+  'ignorePatterns': ['*.test.js'],
   'extends': 'eslint:recommended',
   'overrides': [
   ],

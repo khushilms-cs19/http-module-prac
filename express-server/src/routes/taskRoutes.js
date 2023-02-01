@@ -1,4 +1,5 @@
 const { getAllTasks, getTask, postTask, editTask, completeTask, deleteCompletedTasks, deleteTask } = require('../controllers/taskController');
+const { bodyValidation } = require('../middlewares/taskValidations');
 
 const Router = require('express').Router;
 
@@ -11,10 +12,10 @@ router.get('/', getAllTasks);
 router.get('/:id', getTask);
 
 // POST /tasks
-router.post('/', postTask);
+router.post('/',bodyValidation, postTask);
 
 // PUT /tasks/1
-router.put('/:id',editTask);
+router.put('/:id',bodyValidation,editTask);
 
 // PATCH /tasks/1
 router.patch('/:id', completeTask);

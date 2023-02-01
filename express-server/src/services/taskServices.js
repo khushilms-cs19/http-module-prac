@@ -73,8 +73,11 @@ const deleteTask = async (taskId) => {
       id: taskId,
     }
   });
+  if(!task){
+    return null;
+  }
   await task.destroy();
-  return;
+  return task;
 };
 
 module.exports = {
