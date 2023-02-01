@@ -18,11 +18,11 @@ const getTask = async (taskId) => {
 
 //post a task
 const postTask = async (taskData) => {
-  const task = {
+  const newTask = {
     title: taskData.title,
     isCompleted: false,
   };
-  db.task.create(task);
+  const task = db.task.create(newTask);
   return task;
 };
 

@@ -123,6 +123,7 @@ const deleteTask = async (req, res) => {
   try {
     const taskId = Number(req.params.id);
     const task = await taskServices.deleteTask(taskId);
+    console.log(task);
     if(!task){
       throw new HTTPError('Task not found', 404);
     }

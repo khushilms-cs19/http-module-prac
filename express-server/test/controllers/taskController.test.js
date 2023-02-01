@@ -46,7 +46,7 @@ describe('Task Controller', () => {
       }
       await taskController.getTask(mockReq, mockRes);
       expect(mockRes.status).toBeCalledWith(404);
-      expect(mockRes.json).toBeCalledWith({ error: 'Task not found' });
+      expect(mockRes.json).toBeCalledWith({ message: 'Task not found' });
     });
     it('Should return 500 Error', async () => {
       jest.spyOn(taskServices, 'getTask').mockRejectedValue(null);
@@ -89,7 +89,7 @@ describe('Task Controller', () => {
       expect(mockRes.status).toBeCalledWith(201);
       expect(mockRes.json).toBeCalledWith(mockResult);
     });
-    it('Should return 400 error', async()=>{
+    it('Should return 400 error', async () => {
       const mockBody = {
         title: 'k',
       }
@@ -126,7 +126,7 @@ describe('Task Controller', () => {
   describe('Edit a Task', () => {
     it('Should edit and return the task', async () => {
       const mockBody = {
-        title: 'something in the way 2',
+        title: '2',
       }
       const mockResult = {
         id: 1,
@@ -249,5 +249,36 @@ describe('Task Controller', () => {
       expect(mockRes.status).toBeCalledWith(500);
       expect(mockRes.json).toBeCalledWith({ error: 'Something went wrong' });
     });
+  });
+  describe('Delete Completed Tasks', () => {
+    it('Should return success message', async () => {
+      jest.spyOn(taskServices, 'deleteCompletedTasks').mockResolvedValue(null);
+      const mockReq = {};
+      const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      }
+      await taskController.deleteCompletedTasks(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(200);
+      expect(mockRes.json).toBeCalledWith({ message: 'All completed tasks deleted' });
+    });
+    it('Should return 500 error', async () => {
+      jest.spyOn(taskServices, 'deleteCompletedTasks').mockRejectedValue();
+      const mockReq = {};
+      const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      }
+      await taskController.deleteCompletedTasks(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(500);
+      expect(mockRes.json).toBeCalledWith({ error: 'Something went wrong' });
+    });
+  });
+  describe('Delete a task', () => {
+    it('Should return a success message', async () => {
+      jest.spyOn(taskServices, 'deleteTask').mockResolvedValue({
+
+      })
+    })
   })
 });
