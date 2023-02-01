@@ -4,6 +4,7 @@ module.exports = {
     'es2021': true,
     'node': true
   },
+  'eslintIgnore': [ '*.test.js' ],
   'extends': 'eslint:recommended',
   'overrides': [
   ],
@@ -26,6 +27,6 @@ module.exports = {
     'semi': [
       'error',
       'always'
-    ]
+    ],
   }
 };
