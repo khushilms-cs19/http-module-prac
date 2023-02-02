@@ -1,5 +1,5 @@
 const taskServices = require('../services/taskServices');
-const {HTTPError} = require('../utils/errors');
+const { HTTPError } = require('../utils/errors');
 
 
 
@@ -8,11 +8,11 @@ const {HTTPError} = require('../utils/errors');
  * @param {Request} req
  * @param {Response} res
 */
-const getAllTasks = async(req, res)=> {
-  try {    
+const getAllTasks = async (req, res) => {
+  try {
     const allTasks = await taskServices.getAllTasks();
     res.status(200).json(allTasks);
-  }catch(err){
+  } catch (err) {
     res.status(500).json({
       error: 'Something went wrong.',
     });
@@ -32,10 +32,10 @@ const getTask = async (req, res) => {
     }
     res.status(200).json(task);
   } catch (err) {
-    if(err instanceof HTTPError){
-      res.status(err.code).json({message: err.message});
+    if (err instanceof HTTPError) {
+      res.status(err.code).json({ message: err.message });
     }
-    else{
+    else {
       console.log(err);
       res.status(500).json({ error: 'Something went wrong' });
     }
@@ -70,9 +70,9 @@ const editTask = async (req, res) => {
     }
     res.status(200).json(task);
   } catch (err) {
-    if(err instanceof HTTPError){
-      res.status(err.code).json({error: err.message});
-    }else{
+    if (err instanceof HTTPError) {
+      res.status(err.code).json({ error: err.message });
+    } else {
       res.status(500).json({ error: 'Something went wrong' });
     }
   }
@@ -92,9 +92,9 @@ const completeTask = async (req, res) => {
     }
     res.status(200).json(task);
   } catch (err) {
-    if(err instanceof HTTPError){
-      res.status(err.code).json({error: err.message});
-    }else{
+    if (err instanceof HTTPError) {
+      res.status(err.code).json({ error: err.message });
+    } else {
       res.status(500).json({ error: 'Something went wrong' });
     }
   }
@@ -124,14 +124,14 @@ const deleteTask = async (req, res) => {
     const taskId = Number(req.params.id);
     const task = await taskServices.deleteTask(taskId);
     console.log(task);
-    if(!task){
+    if (!task) {
       throw new HTTPError('Task not found', 404);
     }
     res.status(200).json({ message: 'Task deleted' });
   } catch (err) {
-    if(err instanceof HTTPError){
-      res.status(err.code).json({error: err.message});
-    }else{
+    if (err instanceof HTTPError) {
+      res.status(err.code).json({ error: err.message });
+    } else {
       res.status(500).json({ error: 'Something went wrong' });
     }
   }
