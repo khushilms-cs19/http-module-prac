@@ -1,5 +1,5 @@
 const { getAllTasks, getTask, postTask, editTask, completeTask, deleteCompletedTasks, deleteTask } = require('../controllers/taskController');
-const { bodyValidation } = require('../middlewares/taskValidations');
+const { bodyValidation } = require('../middlewares/taskMiddlewares');
 
 const Router = require('express').Router;
 

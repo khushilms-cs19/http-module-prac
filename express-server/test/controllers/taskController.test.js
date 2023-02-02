@@ -1,5 +1,6 @@
 const taskServices = require('../../src/services/taskServices');
 const taskController = require('../../src/controllers/taskController');
+const taskMiddleware = require('../../src/middlewares/taskMiddlewares');
 
 describe('Task Controller', () => {
   describe('Get all Tasks', () => {
@@ -93,7 +94,7 @@ describe('Task Controller', () => {
       const mockBody = {
         title: 'k',
       }
-      jest.spyOn(taskServices, 'postTask').mockResolvedValue(null);
+      jest.spyOn(taskServices, 'postTask').mockRejectedValue(null);
       const mockReq = {
         body: mockBody,
       }
@@ -101,8 +102,9 @@ describe('Task Controller', () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
       }
-      await taskController.postTask(mockReq, mockRes);
+      taskMiddleware.bodyValidation(mockReq, mockRes);
       expect(mockRes.status).toBeCalledWith(400);
+      expect(mockRes.json).toBeCalledWith({ message: "\"title\" length must be at least 3 characters long" })
       // expect(mockRes.json).toBeCalledWith({message: 'Invalid input'});
     })
     it('Should return 500 error', async () => {
@@ -276,9 +278,58 @@ describe('Task Controller', () => {
   });
   describe('Delete a task', () => {
     it('Should return a success message', async () => {
-      jest.spyOn(taskServices, 'deleteTask').mockResolvedValue({
+      const mockResult = {
+        id: 10,
+        title: 'Just the way you are',
+        isCompleted: false,
+        createdAt: '2023-02-01T15:36:36.390Z',
+        updatedAt: '2023-02-01T15:36:36.390Z'
+      };
+      jest.spyOn(taskServices, 'deleteTask').mockResolvedValue(mockResult);
+      const mockReq = {
+        params: {
+          id: 1,
+        }
+      };
+      const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      }
+      await taskController.deleteTask(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(200);
+      expect(mockRes.json).toBeCalledWith({ message: 'Task deleted' })
+    });
 
-      })
-    })
+    it('Should return 404 error on invalid id', async () => {
+      jest.spyOn(taskServices, 'deleteTask').mockResolvedValue(null);
+      const mockReq = {
+        params: {
+          id: 1,
+        }
+      };
+      const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+      await taskController.deleteTask(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(404);
+      expect(mockRes.json).toBeCalledWith({ error: 'Task not found' });
+    });
+
+    it('Should return 500 error on function break', async () => {
+      jest.spyOn(taskServices, 'deleteTask').mockRejectedValue(null);
+      const mockReq = {
+        params: {
+          id: 1,
+        }
+      };
+      const mockRes = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+      await taskController.deleteTask(mockReq, mockRes);
+      expect(mockRes.status).toBeCalledWith(500);
+      expect(mockRes.json).toBeCalledWith({ error: 'Something went wrong' });
+    });
   })
 });
